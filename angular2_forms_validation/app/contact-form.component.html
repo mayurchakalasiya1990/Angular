@@ -1,0 +1,45 @@
+<!-- 
+    - its template drive form.
+    - #f local variable to access controlGroup object of form element i.e. #f="ngForm"    
+    - ngControl is bind to input element i.e ngControl="firstName"  
+    - #firstName local variable is created to access property of ngControl(firstName) i.e. #firstName="ngForm"
+    - property of ngControl : 
+          -touched: values true if element is touched
+          -dirty: value is true if change value of element
+          -valid: values is true if there is no error
+          -errors: errors has a values if if any validation fail
+          -pristine: values is true if element is untouched
+    - [] is used to change property of element base on condition (disable,value,class,style etc)
+    - () is used to bind event on element (onchange,onfous etc.)
+--> 
+<form #f="ngForm"
+      (ngSubmit)="onSubmit(f.form)">
+  <div class="form-group">
+    <label for="firstName">First Name:</label>
+    <input 
+            ngControl="firstName"  
+            #firstName="ngForm"              
+            type="text" 
+            class="form-control" 
+            id="firstName" 
+            required>
+     <div *ngIf="firstName.touched && !firstName.valid" class="alert alert-danger">
+        Firstname is required.
+      </div>       
+  </div>
+
+  <div class="form-group">
+    <label for="comment">comment:</label>
+    <textarea ngControl="comment" 
+              #comment="ngForm" 
+              class="form-control" 
+              id="comment" required>
+    </textarea>
+    <div *ngIf="comment.touched && !comment.valid" class="alert alert-danger">
+        comment is required.
+    </div>       
+
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Submit</button>
+
+</form>

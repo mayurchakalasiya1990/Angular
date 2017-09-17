@@ -1,0 +1,5 @@
+n order to get npm start running for me, I had to make sure I had globally installed some of the devDependencies. Have you tried:
+
+npm install -g concurrently
+npm install -g lite-server
+npm install -g typescript

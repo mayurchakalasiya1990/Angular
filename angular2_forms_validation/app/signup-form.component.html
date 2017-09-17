@@ -1,0 +1,58 @@
+<!-- 
+    - This is example of Model driven form.
+    - ngFormModel is used to bind ngControlGroup(defined in .ts file) to form [ngFormModel]="form"    
+    - ngSubmit is angular method similar to onSubmit() method.
+    - ngControl directive is assign control over html element. i.e.ngControl="username"
+    - #usename is local variable which is used to access property of ngControl like username.valid. i.e.#username="ngForm"
+
+--> 
+
+<form [ngFormModel]="form" (ngSubmit)="signUp()">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input 
+            id="username" 
+            type="text" 
+            class="form-control"
+            ngControl="username"
+            #username="ngForm" 
+            required>
+    </div>
+
+    <!-- 
+        Pending is property of control directive in angularjs which indicate asynvalidator is running or not.
+    -->
+    <div *ngIf="username.control.pending">
+        Checking for uniqueness...
+    </div>
+
+    <div *ngIf="username.touched && username.errors" >
+        <div *ngIf="username.errors.required" class="alert alert-danger">
+            Username is required.
+        </div>
+        {{username.errors.cannotContainSpace}}
+        <div *ngIf="username.errors.cannotContainSpace" class="alert alert-danger">
+            Username cannot contain space.
+        </div>
+        {{username.errors.shouldBeUnique}}
+        <div *ngIf="username.errors.shouldBeUnique" class="alert alert-danger">
+            Username is already used by other user.
+        </div>
+    </div>
+    
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+            id="password" 
+            type="text" 
+            class="form-control"
+            ngControl="password"
+            #password="ngForm"
+            required>
+    </div>
+    <div *ngIf="password.touched && !password.valid" class="alert alert-danger">
+        Password is required.
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Sign Up</button>
+</form>
